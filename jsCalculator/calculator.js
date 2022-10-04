@@ -78,7 +78,7 @@ function handleSymbol(value){
         equation.innerText = '' + roundNumber(calculateAnswer(calculatedEquation));
         calculatedEquation = '' + roundNumber(calculateAnswer(calculatedEquation));
     }
-    else if(value === '.'){
+    else if(value === '.' && calculatedEquation.slice(-1) != '.'){
         // Float
         equation.innerText += value;
         calculatedEquation += value;
