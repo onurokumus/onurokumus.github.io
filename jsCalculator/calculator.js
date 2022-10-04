@@ -5,8 +5,6 @@ const answer = document.querySelector(".answer");
 const significantNumber = 4;
 const operators = ['+', '-', '*', '/']
 
-let finalValue = 0;
-let lastValue = 0;
 let calculatedEquation = '';
 
 for (var i = 0 ; i < buttons.length; i++) {
@@ -31,9 +29,11 @@ function buttonClick(value) {
         answerAppear();
     }
 
+    // Update answer div
     try{
         answer.innerText = "= " + roundNumber(calculateAnswer(calculatedEquation));
     } catch(err){}
+
 }
 
 function calculateAnswer(equationText){
@@ -78,8 +78,9 @@ function handleSymbol(value){
         equation.innerText = '' + roundNumber(calculateAnswer(calculatedEquation));
         calculatedEquation = '' + roundNumber(calculateAnswer(calculatedEquation));
     }
-    else if(value === '.' && calculatedEquation.slice(-1) != '.'){
+    else if(value === '.' && checkDot(calculatedEquation)){
         // Float
+        // Cant repeat dots
         equation.innerText += value;
         calculatedEquation += value;
     }
@@ -143,4 +144,21 @@ function answerDisappear(){
 function roundNumber(num){
     // Rounds number to specified significant number
     return Math.round((num + Number.EPSILON) * Math.pow(10, significantNumber)) / Math.pow(10, significantNumber);
+}
+
+function checkDot(num){
+    // Return false if num has a dot
+    for (var i = 0 ; i < num.length; i++){
+
+        char = num[num.length-i-1];
+        if (operators.includes(char)){
+            return true;
+        }
+        else if (char === '.'){
+            return false;
+        }
+
+    }
+    
+    return true;
 }
